@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node src/server.js",
     "test:create-contact": "node src/scripts/createContact.js",
     "test:create-or-update-contact": "node src/scripts/testCreateOrUpdateContact.js"
   },
