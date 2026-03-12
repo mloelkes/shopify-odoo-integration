@@ -24,10 +24,11 @@ app.post("/webhooks/shopify/orders-create", async (req, res) => {
     const firstName = customer.first_name || billingAddress.first_name || "";
     const lastName = customer.last_name || billingAddress.last_name || "";
     const phone = customer.phone || billingAddress.phone || "";
+    const shopifyCustomerId = customer.id ? String(customer.id) : null;
 
-    if (!email) {
+    if (!shopifyCustomerId && !email) {
       return res.status(400).json({
-        error: "Missing customer email in payload",
+        error: "Missing customer identifier (Shopify ID or email) in payload",
       });
     }
 
@@ -44,6 +45,7 @@ app.post("/webhooks/shopify/orders-create", async (req, res) => {
       odooConfig: config.odoo,
       uid,
       partnerData,
+      shopifyCustomerId,
     });
 
     res.status(200).json({
